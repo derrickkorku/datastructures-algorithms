@@ -1,2 +1,2 @@
-# datastructures-algorithms-java
-This repo contains java code implementations of datastructures and algorithms
+# datastructures-algorithms
+This repo contains java|php code implementations of datastructures and algorithms
