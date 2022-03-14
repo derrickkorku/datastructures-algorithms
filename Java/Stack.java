@@ -24,6 +24,6 @@ class Stack {
     }
 
     public int peek() {
-        return arr[top];
+        return array[top];
     }
 }
