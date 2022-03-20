@@ -15,4 +15,36 @@ public class FibImproved {
 
         return mem[n] = findFib(n - 1, mem) + findFib(n - 2, mem);
     }
+
+
+    public static int findFibTwo(int n){
+        if (n == 0 || n == 1) return n;
+
+        int[] mem = new int[n + 1];
+
+        mem[0] = 0;
+        mem[1] = 1;
+
+        for (int i = 2; i < n; i++){
+            mem[i] = mem[i - 1] + mem[i - 2];
+        }
+
+        return mem[n - 1] + mem[n - 2];
+    }
+
+
+    public static int findFibThree(int n){
+        if (n == 0) return 0;
+
+        int a = 0;
+        int b = 1;
+
+        for (int i = 2; i < n; i++){
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+
+        return a + b;
+    }
 }
