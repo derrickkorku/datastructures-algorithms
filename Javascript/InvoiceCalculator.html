@@ -1,0 +1,151 @@
+<html>
+  <head></head>
+  <body>
+    <button type="button" onclick="addRow()">Add Row</button>
+    <button onclick="deleteRow()">Delete Row</button>
+
+    <table border="1" style="border-collapse: collapse" id="invoice-table">
+      <thead>
+        <tr>
+          <th>Select</th>
+          <th>Sno.</th>
+          <th>Item</th>
+          <th>Quantiy</th>
+          <th>Cost</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="checkbox" name="chk[]" id="chk1" />
+          </td>
+          <td>1</td>
+          <td>
+            <input type="text" name="item[]" id="item1" />
+          </td>
+          <td>
+            <input type="text" name="qty[]" id="qty1" />
+          </td>
+          <td>
+            <input type="text" name="cost[]" id="cost1" />
+          </td>
+          <th>
+            <input type="text" name="price[]" id="price1" readonly />
+          </th>
+        </tr>
+      </tbody>
+    </table>
+    Total <input type="text" name="total" id="total" readonly />
+    <button onclick="sumTotal()">Sum total</button>
+  </body>
+
+  <script>
+    window.onload = function () {
+      document.getElementsByName("qty[]")[0].onkeyup = function () {
+        calculatePrice(1);
+      };
+
+      document.getElementsByName("cost[]")[0].onkeyup = function () {
+        calculatePrice(1);
+      };
+    };
+
+    function addRow() {
+      let table = document.getElementById("invoice-table");
+      let rowCount = table.rows.length;
+
+      let row = table.insertRow(rowCount);
+
+      let cell1 = row.insertCell(0);
+      let chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.name = "chk[]";
+      chk.id = "chk" + rowCount;
+      cell1.appendChild(chk);
+
+      let cell2 = row.insertCell(1);
+      cell2.innerHTML = rowCount;
+
+      let cell3 = row.insertCell(2);
+      let item = document.createElement("input");
+      item.type = "text";
+      item.name = "item[]";
+      item.id = "item" + rowCount;
+      item.onkeyup = function () {
+        calculatePrice(rowCount);
+      };
+      cell3.appendChild(item);
+
+      let cell4 = row.insertCell(3);
+      let qty = document.createElement("input");
+      qty.type = "text";
+      qty.name = "qty[]";
+      qty.id = "qty" + rowCount;
+      qty.onkeyup = function () {
+        calculatePrice(rowCount);
+      };
+      cell4.appendChild(qty);
+
+      let cell5 = row.insertCell(4);
+      let cost = document.createElement("input");
+      cost.type = "text";
+      cost.name = "cost[]";
+      cost.id = "cost" + rowCount;
+      cost.onkeyup = function () {
+        calculatePrice(rowCount);
+      };
+      cell5.appendChild(cost);
+
+      let cell6 = row.insertCell(5);
+      let price = document.createElement("input");
+      price.type = "text";
+      price.name = "price[]";
+      price.id = "price" + rowCount;
+      price.readOnly = "readonly";
+      cell6.appendChild(price);
+    }
+
+    function calculatePrice(rowNumber) {
+      let qtyAmount = parseFloat(
+        document.getElementById("qty" + rowNumber).value
+      );
+      let costAmount = parseFloat(
+        document.getElementById("cost" + rowNumber).value
+      );
+
+      let totalPrice = qtyAmount * costAmount;
+      totalPrice = isNaN(totalPrice) ? 0 : totalPrice;
+
+      document.getElementById("price" + rowNumber).value =
+        totalPrice.toFixed(2);
+    }
+
+    function deleteRow() {
+      let table = document.getElementById("invoice-table");
+      let rowCount = table.rows.length;
+
+      for (let i = 0; i < rowCount; i++) {
+        let row = table.rows[i];
+        let chk = row.cells[0].childNodes[0];
+
+        if (chk != null && chk.checked == true) {
+          table.deleteRow(i);
+          rowCount--;
+          i--;
+        }
+      }
+    }
+
+    function sumTotal() {
+      let prices = document.getElementsByName("price[]");
+      let total = 0;
+      for (let i = 0; i < prices.length; i++) {
+        let price = parseFloat(prices[i].value);
+        total += price;
+      }
+
+      document.getElementById("total").value = total;
+    }
+  </script>
+</html>
