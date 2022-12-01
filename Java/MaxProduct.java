@@ -1,17 +1,19 @@
 import java.util.*;
+
 /**
  * Find the maximum value of the product of 2 numbers in an array
+ * 
  * @author Derrick Korku
  */
 class MaxProduct {
 
-    public static double maxProduct(int[] arr){
+    public static double maxProduct(int[] arr) {
         int size = arr.length;
         int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < size; i++){
-            for (int j = i + 1; j < size; j++){
-                if (arr[i] * arr[j] > max){
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (arr[i] * arr[j] > max) {
                     max = arr[i] * arr[j];
                 }
             }
@@ -20,7 +22,7 @@ class MaxProduct {
         return max;
     }
 
-    public static double maxProduct2(int[] arr){
+    public static double maxProduct2(int[] arr) {
         int size = arr.length;
 
         Arrays.sort(arr);
@@ -28,18 +30,14 @@ class MaxProduct {
         double max = arr[size - 1] * arr[size - 2];
         double min = arr[0] * arr[1];
 
-        if ( max > min){
+        if (max > min) {
             return max;
         } else {
             return min;
         }
     }
 
-    public static double maxProduct3(int[] arr){
+    public static void main(String[] args) {
 
     }
-
-  public static void main(String[] args) {
-      
-  }
 }
