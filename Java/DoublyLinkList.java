@@ -56,7 +56,7 @@ class DoublyLinkList<T> implements Iterable<T> {
             head = tail = new Node<T>(elem, null, null);
         } else {
             tail.next = new Node<T>(elem, tail, null);
-            tail = head.next;
+            tail = tail.next;
         }
 
         size++;

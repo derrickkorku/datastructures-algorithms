@@ -1,76 +1,90 @@
-/**
- * Implement java Queue data structure
- */
-class Queue {
-    private int capacity;
-    private int size;
-    private int front;
-    private int rear;
-    private int[] queue;
+import java.util.Arrays;
 
+public class Queue {
+    private int front = -1;
+    private int rear = 0;
+    private int size = 0;
+    private int capacity = 2;
+    private int[] arr = new int[capacity];
 
-    Queue(int capacity){
-        this.capacity = capacity;
-        this.queue = new int[capacity];
-        this.front = 0;
-        this.rear = capacity - 1;
-        this.size = 0;
+    public void enqueue(int obj) {
+        if (isFull()) {
+            this.resize();
+        }
+
+        System.out.println("Adding item " + obj);
+        this.arr[this.rear] = obj;
+        this.rear = (this.rear + 1) % this.capacity;
+        this.size++;
     }
 
-    boolean isFull(Queue queue){
-        return this.queue.capacity - 1 == this.queue.size;
+    private void resize() {
+        System.out.println("Resizing queue.");
+        this.capacity = this.arr.length * 2;
+        this.arr = Arrays.copyOf(this.arr, this.capacity);
     }
 
-    boolean isEmpty(Queue queue){
-        return this.queue.size == 0;
-    }
-
-    /**
-     * Add item to queue Or at the end of this.queue
-     */
-    void enqueue(int item){
-      if isFull(this){
-        return;
-      }
-
-      this.rear = (this.rear + 1) % this.capacity;
-      this.queue[this.rear] = item;
-      this.size++;
-    }
-
-
-    /**
-     * Remove item from the front of queue or Dequeue
-     */
-    int dequeue(){
-        if(isEmpty(this)){
-            return Integer.MIN_VALUE;
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty.");
+            return -1;
         }
 
         this.front = (this.front + 1) % this.capacity;
+
+        System.out.println("Removing item at position " + this.front);
+        int item = this.arr[this.front];
         this.size--;
-        return this.queue[this.front];
+        return item;
     }
 
-    /**
-     * Peek front item
-     */
-    int front(){
-        if(isEmpty(this)){
-            return Integer.MIN_VALUE;
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty.");
+            return -1;
         }
 
-        return this.queue[this.front];
+        System.out.println("Returning item at position " + (this.front + 1) % this.capacity);
+        int item = this.arr[(this.front + 1) % this.capacity];
+        return item;
     }
 
-    /**
-     * Peek rear item
-     */
-    int rear(){
-        if(isEmpty(this)){
-            return Integer.MIN_VALUE;
-        }
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
 
-        return this.queue[this.rear];
+    public boolean isFull() {
+        return this.capacity == this.size;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    public String toString() {
+        return "Queue has size: " + this.size() + ", is full status is " + this.isFull() + ", is empty status is "
+                + this.isEmpty() + ", capacity is " + this.capacity;
+    }
+
+    public static void main(String[] args) {
+        Queue q = new Queue();
+
+        q.enqueue(1);
+        System.out.println(q);
+
+        q.enqueue(4);
+        System.out.println(q);
+
+        q.enqueue(10);
+        System.out.println(q);
+
+        System.out.println(q.peek());
+        System.out.println(q);
+
+        q.enqueue(13);
+        System.out.println(q);
+
+        q.dequeue();
+        System.out.println(q);
     }
 }
